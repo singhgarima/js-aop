@@ -22,3 +22,15 @@ Function.prototype.after = function (pointcutName, aspect) {
 	}
 }
 
+Function.prototype.around = function (pointcutName, aspectbefore, aspectAfter) {
+	var object = this;
+	var originalPointcut = object.prototype[pointcutName];
+
+	object.prototype[pointcutName] = function () {		
+		var args = arguments;
+		aspectbefore.apply(null, args);
+		result = originalPointcut.apply(this, args);
+		aspectAfter.apply(null, args);
+		return result;
+	}
+}

@@ -76,4 +76,37 @@ describe("aop", function () {
 
     });
 
+    describe('around', function () {
+
+        var burger;
+
+        beforeEach(function() {
+            burger = new Dish('burger', 'Fast Food');
+        });
+
+        it('should apply aspect before function call', function () {
+            var messageBefore = "Before";
+            var messageAfter = "After";
+            Dish.around('serve', function () {
+                Command.give(messageBefore);
+            }, function () {
+                Command.give(messageAfter)
+            });
+
+            burger.serve();
+
+            expect(Command.give.calls.all()[0].args).toEqual([messageBefore]);
+            expect(Command.give.calls.all()[1].args).toEqual([messageAfter]);
+        });
+
+        it('should ensure correct functioning of original function', function() {
+            Dish.around('serve', function () {}, function () {});
+
+            output = burger.serve();
+
+            expect(output).toBe("Dish burger is now served. This belongs to the Fast Food cuisine.");
+        });
+
+    });
+
 });
