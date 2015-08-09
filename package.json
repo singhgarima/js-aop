@@ -1,0 +1,16 @@
+{
+  "name": "js-aop",
+  "version": "1.0.0",
+  "description": "hand-on js aop",
+  "author": "Garima Singh <igarimasingh@gmail.com> (http://singhgarima.github.io/)",
+  "scripts": {
+    "test": "node_modules/karma/bin/karma start karma.conf.js --single-run"
+  },
+  "devDependencies": {
+    "karma": "0.13.8",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "0.3.6",
+    "karma-requirejs": "^0.2.2",
+    "requirejs": "^2.1.20"
+  }
+}
