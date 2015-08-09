@@ -1,9 +1,9 @@
 describe("aop", function () {
 
-    var Command, Dish;
+    var CommandAspect, Dish;
     
-    Command = function () {};
-    Command.give = function () {};
+    CommandAspect = function () {};
+    CommandAspect.give = function () {};
 
     beforeEach(function () {
         Dish = function (name, cuisine) {
@@ -15,7 +15,7 @@ describe("aop", function () {
             return "Dish " + this.name + " is now served. This belongs to the " + this.cuisine + " cuisine.";
         };
 
-        spyOn(Command, 'give');
+        spyOn(CommandAspect, 'give');
     });
 
     describe('after', function () {
@@ -29,12 +29,12 @@ describe("aop", function () {
         it('should apply aspect after function call', function () {
             var message = "The dish is now served. Please clean your plates once your are finished.";
             Dish.after('serve', function () {
-                Command.give(message);
+                CommandAspect.give(message);
             });
 
             rajma.serve();
 
-            expect(Command.give).toHaveBeenCalledWith(message);
+            expect(CommandAspect.give).toHaveBeenCalledWith(message);
         });
 
         it('should ensure correct functioning of original function', function() {
@@ -58,12 +58,12 @@ describe("aop", function () {
         it('should apply aspect before function call', function () {
             var message = "The dish will soon be served.";
             Dish.before('serve', function () {
-                Command.give(message);
+                CommandAspect.give(message);
             });
 
             pizza.serve();
 
-            expect(Command.give).toHaveBeenCalledWith(message);
+            expect(CommandAspect.give).toHaveBeenCalledWith(message);
         });
 
         it('should ensure correct functioning of original function', function() {
@@ -88,15 +88,15 @@ describe("aop", function () {
             var messageBefore = "Before";
             var messageAfter = "After";
             Dish.around('serve', function () {
-                Command.give(messageBefore);
+                CommandAspect.give(messageBefore);
             }, function () {
-                Command.give(messageAfter)
+                CommandAspect.give(messageAfter)
             });
 
             burger.serve();
 
-            expect(Command.give.calls.all()[0].args).toEqual([messageBefore]);
-            expect(Command.give.calls.all()[1].args).toEqual([messageAfter]);
+            expect(CommandAspect.give.calls.all()[0].args).toEqual([messageBefore]);
+            expect(CommandAspect.give.calls.all()[1].args).toEqual([messageAfter]);
         });
 
         it('should ensure correct functioning of original function', function() {

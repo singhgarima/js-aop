@@ -1,36 +1,36 @@
-Function.prototype.before = function (pointcutName, aspect) {
+Function.prototype.before = function (pointcutName, advice) {
 var object = this;
 	var originalPointcut = object.prototype[pointcutName];
 
 	object.prototype[pointcutName] = function () {		
 		var args = arguments;
-		aspect.apply(null, args);
+		advice.apply(null, args);
 		result = originalPointcut.apply(this, args);
 		return result;
 	}
 }
 
-Function.prototype.after = function (pointcutName, aspect) {
+Function.prototype.after = function (pointcutName, advice) {
 	var object = this;
 	var originalPointcut = object.prototype[pointcutName];
 
 	object.prototype[pointcutName] = function () {		
 		var args = arguments;
 		result = originalPointcut.apply(this, args);
-		aspect.apply(null, args);
+		advice.apply(null, args);
 		return result;
 	}
 }
 
-Function.prototype.around = function (pointcutName, aspectbefore, aspectAfter) {
+Function.prototype.around = function (pointcutName, advicebefore, adviceAfter) {
 	var object = this;
 	var originalPointcut = object.prototype[pointcutName];
 
 	object.prototype[pointcutName] = function () {		
 		var args = arguments;
-		aspectbefore.apply(null, args);
+		advicebefore.apply(null, args);
 		result = originalPointcut.apply(this, args);
-		aspectAfter.apply(null, args);
+		adviceAfter.apply(null, args);
 		return result;
 	}
 }
